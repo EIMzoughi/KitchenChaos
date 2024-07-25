@@ -1,14 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour
 {
+    public event EventHandler OnRecipeSpawned;
+    public event EventHandler OnRecipeCompleted;
     public static DeliveryManager Instance { get; private set; }
 
     [SerializeField] private SO_RecipeList _recipeListSO;
 
-    private List<SO_Recipe> _waitingRecepiceList;
+    private List<SO_Recipe> _waitingRecepiceSOList;
     private float _spawnRecipeTimer;
     private float _spawnRecipeTimerMax=4f;
     private float _waitingRecipeMaxNumber=4f;
@@ -17,7 +20,7 @@ public class DeliveryManager : MonoBehaviour
     {
         Instance = this;
 
-        _waitingRecepiceList = new List<SO_Recipe>();
+        _waitingRecepiceSOList = new List<SO_Recipe>();
     }
     private void Update()
     {
@@ -25,26 +28,27 @@ public class DeliveryManager : MonoBehaviour
         if(_spawnRecipeTimer > _spawnRecipeTimerMax )
         {
             _spawnRecipeTimer = 0;
-            if(_waitingRecepiceList.Count < _waitingRecipeMaxNumber )
+            if(_waitingRecepiceSOList.Count < _waitingRecipeMaxNumber )
             {
 
                 SpawnRecipe();
+                OnRecipeSpawned?.Invoke(this,EventArgs.Empty);
             }
         }
     }
 
     public void SpawnRecipe() 
     {
-        SO_Recipe waitingRecipeSO = _recipeListSO.recipeSOList[Random.RandomRange(0, _recipeListSO.recipeSOList.Count)];
-        _waitingRecepiceList.Add(waitingRecipeSO);
+        SO_Recipe waitingRecipeSO = _recipeListSO.recipeSOList[UnityEngine.Random.Range(0, _recipeListSO.recipeSOList.Count)];
+        _waitingRecepiceSOList.Add(waitingRecipeSO);
         Debug.Log(waitingRecipeSO.recipeName);
     }
 
     public void DeliverRecipe(PlateKitchenObject plateKitchenObject)
     {
-        for(int i =0; i < _waitingRecepiceList.Count;i++)
+        for(int i =0; i < _waitingRecepiceSOList.Count;i++)
         {
-            SO_Recipe waitingRecipeSO = _waitingRecepiceList[i];
+            SO_Recipe waitingRecipeSO = _waitingRecepiceSOList[i];
 
             if(waitingRecipeSO.kitchenObjectsSOList.Count == plateKitchenObject.GetSO_KitchensList().Count)
             {
@@ -54,7 +58,7 @@ public class DeliveryManager : MonoBehaviour
                     bool ingredientFound = false;
                     foreach (SO_KitchenObject plateKitchenObjectSO in plateKitchenObject.GetSO_KitchensList())
                     {
-                        if(plateKitchenObjectSO == plateKitchenObjectSO)
+                        if(plateKitchenObjectSO == recipeKitchenObjectSO)
                         {
                             ingredientFound = true;
                             break;
@@ -68,12 +72,19 @@ public class DeliveryManager : MonoBehaviour
                 if (plateContentsMatchesRecipe)
                 {
                     //player delivered the Correct recipe!
-                    _waitingRecepiceList.RemoveAt(i);
-                    Debug.Log("Correct");
+                    _waitingRecepiceSOList.RemoveAt(i);
+       
+                    OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
                     return;
                 }
             }
         }
+        //player delivered the Wrong recipe!
         Debug.Log("BOOOOOOOOOOOO");
+    }
+
+    public List<SO_Recipe> GetWaitingRecipeSOLIST()
+    {
+        return _waitingRecepiceSOList;
     }
 }
