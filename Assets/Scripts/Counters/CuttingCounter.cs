@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
 {
+    public static event EventHandler OnAnyCut;
+
+    public static void ResetStaticData()
+    {
+        OnAnyCut = null;
+    }
+
     public event EventHandler OnCutAnimation;
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
-    public static event EventHandler OnAnyCut;
     
 
     [SerializeField] private SO_CuttingRecipe[] cutKitchenObjectSOArray;
