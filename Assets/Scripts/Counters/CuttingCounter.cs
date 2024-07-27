@@ -7,7 +7,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
 {
     public static event EventHandler OnAnyCut;
 
-    public static void ResetStaticData()
+    new public static void ResetStaticData()
     {
         OnAnyCut = null;
     }
