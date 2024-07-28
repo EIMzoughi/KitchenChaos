@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour, IKitchenObjectParent
+public class Player : NetworkBehaviour, IKitchenObjectParent
 {   
-    public static Player Instance {get;private set;}
+    //public static Player Instance {get;private set;}
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
-            Debug.Log("singeltaon Play!!!");
-        
+        /*if (Instance == null)
+            Instance = this;      
+        */
     }
 
 
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float rotateSpeed = 20f;
-    [SerializeField] private InputManager inputManager;
     [SerializeField] private Transform spawnPostion;
 
     private bool isWalking;
@@ -37,8 +35,8 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void Start()
     {
-        inputManager.OnInteractAction += InputManager_OnInteractAction;
-        inputManager.OnInteractAlternateAction += InputManager_OnInteractAlternateAction;
+        InputManager.Instance.OnInteractAction += InputManager_OnInteractAction;
+        InputManager.Instance.OnInteractAlternateAction += InputManager_OnInteractAlternateAction;
     }
 
     private void InputManager_OnInteractAlternateAction(object sender, EventArgs e)
@@ -71,7 +69,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void HandleMovement()
     {
-        Vector2 inputVector = inputManager.GetMovementVector().normalized;
+        Vector2 inputVector = InputManager.Instance.GetMovementVector().normalized;
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
         float playerRaduis = .7f;
@@ -110,7 +108,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void HandleInteractions()
     {
-        Vector2 inputVector = inputManager.GetMovementVector().normalized;
+        Vector2 inputVector = InputManager.Instance.GetMovementVector().normalized;
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
         if (moveDir != Vector3.zero)
