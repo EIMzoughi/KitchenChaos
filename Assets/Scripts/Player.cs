@@ -59,14 +59,16 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
     private void Update()
     {
+        if (!IsOwner) return;
+
         HandleMovement();
+        
         HandleInteractions();
     }
     public bool IsWalking()
     {
         return isWalking;
     }
-
     private void HandleMovement()
     {
         Vector2 inputVector = InputManager.Instance.GetMovementVector().normalized;
