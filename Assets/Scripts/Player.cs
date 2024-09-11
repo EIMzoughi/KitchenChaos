@@ -85,13 +85,13 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
         float playerRaduis = .7f;
         float playerHeight = 2f;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDir, playerSpeed * Time.deltaTime, counterLayerMask);
+        bool canMove = !Physics.BoxCast(transform.position, Vector3.one * playerRaduis, moveDir,Quaternion.identity, playerSpeed * Time.deltaTime, counterLayerMask);
 
         isWalking = moveDir != Vector3.zero;
         if (!canMove)
         {
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirX, playerSpeed * Time.deltaTime, counterLayerMask);
+            canMove = moveDir.x != 0 && !Physics.BoxCast(transform.position, Vector3.one * playerRaduis, moveDirX, Quaternion.identity, playerSpeed * Time.deltaTime, counterLayerMask);
 
             if (canMove)
             {
@@ -100,7 +100,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
             else
             {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-                canMove = moveDir.z!=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirZ, playerSpeed * Time.deltaTime, counterLayerMask);
+                canMove = moveDir.z!=0 && !Physics.BoxCast(transform.position, Vector3.one * playerRaduis, moveDirZ, Quaternion.identity, playerSpeed * Time.deltaTime, counterLayerMask);
                 if (canMove)
                 {
                     moveDir = moveDirZ;

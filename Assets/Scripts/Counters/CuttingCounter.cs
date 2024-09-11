@@ -41,7 +41,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
                 {
                     if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
                     {
-                        KitchenObject.DestoryKitchenObject(player.GetKitchenObject());
+                        KitchenObject.DestoryKitchenObject(GetKitchenObject());
                     }
                 }               
             }
