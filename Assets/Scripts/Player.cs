@@ -25,6 +25,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
     [SerializeField] private float playerSpeed = 10f;
     [SerializeField] private float rotateSpeed = 20f;
     [SerializeField] private Transform spawnPostion;
+    [SerializeField] private LayerMask counterLayerMask;
 
     private bool isWalking;
     private Vector3 lastInteractDir;
@@ -84,13 +85,13 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
 
         float playerRaduis = .7f;
         float playerHeight = 2f;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDir, playerSpeed * Time.deltaTime);
+        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDir, playerSpeed * Time.deltaTime, counterLayerMask);
 
         isWalking = moveDir != Vector3.zero;
         if (!canMove)
         {
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirX, playerSpeed * Time.deltaTime);
+            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirX, playerSpeed * Time.deltaTime, counterLayerMask);
 
             if (canMove)
             {
@@ -99,7 +100,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
             else
             {
                 Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-                canMove = moveDir.z!=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirZ, playerSpeed * Time.deltaTime);
+                canMove = moveDir.z!=0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRaduis, moveDirZ, playerSpeed * Time.deltaTime, counterLayerMask);
                 if (canMove)
                 {
                     moveDir = moveDirZ;
@@ -126,7 +127,7 @@ public class Player : NetworkBehaviour, IKitchenObjectParent
             lastInteractDir = moveDir;
         }
         float interactDistance = 1.5f;
-        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance))
+        if (Physics.Raycast(transform.position, lastInteractDir, out RaycastHit raycastHit, interactDistance,counterLayerMask))
         {
             if (raycastHit.transform.TryGetComponent(out BaseCounter baseCounter))
             {

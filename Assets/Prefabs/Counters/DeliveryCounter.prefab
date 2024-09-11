@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5138311816423307986}
   - component: {fileID: 5479069494774804767}
   - component: {fileID: 2873275383632092799}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DeliveryArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,6 +116,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 591945872155229481, guid: be1e77e8d4e81bf4292e5b46dc090583,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 591945872155229481, guid: be1e77e8d4e81bf4292e5b46dc090583,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -128,6 +133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Selected
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589716710238282922, guid: be1e77e8d4e81bf4292e5b46dc090583,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282923, guid: be1e77e8d4e81bf4292e5b46dc090583,
         type: 3}
@@ -249,10 +259,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9054466601804094068}
     m_Modifications:
+    - target: {fileID: 591945872155229481, guid: be1e77e8d4e81bf4292e5b46dc090583,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282922, guid: be1e77e8d4e81bf4292e5b46dc090583,
         type: 3}
       propertyPath: m_Name
       value: DeliveryCounter_Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589716710238282922, guid: be1e77e8d4e81bf4292e5b46dc090583,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4589716710238282923, guid: be1e77e8d4e81bf4292e5b46dc090583,
         type: 3}
@@ -323,6 +343,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2576833060321417371, guid: b18aac91a13bf86419ebbe09cd5eca56,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1466024142
+      objectReference: {fileID: 0}
     - target: {fileID: 906973224498882052, guid: b18aac91a13bf86419ebbe09cd5eca56,
         type: 3}
       propertyPath: m_Name

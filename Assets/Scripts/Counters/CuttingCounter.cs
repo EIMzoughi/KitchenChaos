@@ -41,7 +41,7 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
                 {
                     if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
                     {
-                        KitchenObject.DestoryKitchenObject(GetKitchenObject());
+                        KitchenObject.DestoryKitchenObject(player.GetKitchenObject());
                     }
                 }               
             }
@@ -52,13 +52,13 @@ public class CuttingCounter : BaseCounter, IKitchenObjectParent, IHasProgress
         }
     }
 
-    [ServerRpc(RequireOwnership = true)]
+    [ServerRpc(RequireOwnership = false)]
     private void InteractLogicPlaceObjectOnCounterServerRpc()
     {
         InteractLogicPlaceObjectOnCounterClientRpc();
     }
 
-    [ClientRpc(RequireOwnership = true)]
+    [ClientRpc]
     private void InteractLogicPlaceObjectOnCounterClientRpc()
     {
         CuttingCount = 0;
