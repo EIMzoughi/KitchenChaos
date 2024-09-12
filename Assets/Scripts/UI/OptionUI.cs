@@ -61,7 +61,7 @@ public class OptionUI : MonoBehaviour
     }
     private void Start()
     {
-        GameManager.Instance.OnGameUnpaused += GM_OnGameUnpaused;
+        GameManager.Instance.OnLocalGameUnpaused += GM_OnGameUnpaused;
         UpdateVisual();
         Hide();
         HidePressToRebindKey();
