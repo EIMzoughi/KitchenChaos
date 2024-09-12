@@ -16,6 +16,8 @@ public class InputManager : MonoBehaviour
 
     public event EventHandler OnPauseAction;
 
+    public event EventHandler OnAnyKeyAction;
+
     public enum Binding
     {
         MoveUp,
@@ -45,8 +47,13 @@ public class InputManager : MonoBehaviour
         playerInputAction.Player.Interact.performed += InteractPerformed;
         playerInputAction.Player.InteractAlternate.performed += InteractAlternate_performed;
         playerInputAction.Player.Pause.performed += Pause_performed;
-
+        playerInputAction.Player.AnyKey.performed += AnyKey_performed;
         
+    }
+
+    private void AnyKey_performed(InputAction.CallbackContext obj)
+    {
+        OnAnyKeyAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void OnDestroy()
@@ -54,7 +61,7 @@ public class InputManager : MonoBehaviour
         playerInputAction.Player.Interact.performed -= InteractPerformed;
         playerInputAction.Player.InteractAlternate.performed -= InteractAlternate_performed;
         playerInputAction.Player.Pause.performed -= Pause_performed;
-
+        playerInputAction.Player.AnyKey.performed -= AnyKey_performed;
         playerInputAction.Dispose();
     }
 
